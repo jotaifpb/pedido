@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Pedido</title>
+<style>
+    @page {
+        size: 80mm 297mm; /* Ajuste o tamanho da página para a impressora EPSON T20 */
+        margin: 5mm;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 8pt; /* Tamanho da fonte definido como 8 */
+    }
+    #pedido {
+        width: 100%;
+        padding: 5px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 5px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    input[type="text"] {
+        width: calc(100% - 10px);
+        padding: 5px;
+        font-size: 8pt;
+        border: 1px solid #ccc;
+    }
+    input[type="text"]:hover {
+        background-color: #f2f2f2; /* Destaca o campo quando o mouse passa sobre ele */
+    }
+    #btn-adicionar, #btn-excluir {
+        display: block;
+        width: 150px;
+        margin: 10px auto;
+        padding: 8px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    #btn-adicionar:hover, #btn-excluir:hover {
+        background-color: #45a049;
+    }
+    .destaque {
+        font-size: 10pt;
+        font-weight: bold;
+        background-color: #f2f2f2;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    @media print {
+        #pedido {
+            width: 80mm; /* Ajuste a largura do pedido para a impressora EPSON T20 */
+        }
+        input[type="text"] {
+            width: calc(100% - 12px); /* Ajuste a largura dos campos de texto para a impressora EPSON T20 */
+        }
+        #btn-adicionar, #btn-excluir {
+            display: none;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="pedido">
+    <h2>Meu Pedido</h2>
+    <p>Data e Hora: <span id="data-hora"></span></p>
+    <table id="tabela-itens">
+        <thead>
+            <tr>
+                <th>NUM</th>
+                <th>PRODUTO</th>
+                <th>QUANTIDADE</th>
+                <th>VALOR UNIT</th>
+                <th>TOTAL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td><input type="text" cols="20" name="produto[]" value="" maxlength="40"></td>
+                <td><input type="text" name="quantidade[]" value=""  maxlength="5" onchange="calcularTotal(this)"></td>
+                <td><input type="text" name="valor_unit[]" value="" maxlength="5" onchange="calcularTotal(this)"></td>
+                <td><input type="text" name="total[]" value="" readonly maxlength="10"></td>
+            </tr>
+        </tbody>
+        
+    </table>
+    <button id="btn-adicionar" onclick="adicionarItem()">Adicionar Item</button>
+    <button id="btn-excluir" onclick="excluirItem()">Excluir Último Item</button>
+    <button id="btn-imprimir" onclick="window.print()">Imprimir Pedido</button>
+</div>
+  <tfoot>
+            <tr>
+                <td colspan="4" style="text-align:right;">VL. TOTAL:</td>
+                <td><input type="text" id="total_pedido" value="0.00" readonly class="destaque" maxlength="10"></td>
+            </tr>
+        </tfoot>
+
+<script>
+function atualizarDataHora() {
+    var dataHoraAtual = new Date();
+    var dataHoraFormatada = dataHoraAtual.toLocaleString();
+    document.getElementById("data-hora").textContent = dataHoraFormatada;
+}
+
+function calcularTotal(input) {
+    var tr = input.parentNode.parentNode;
+    var quantidade = parseFloat(tr.querySelector('[name="quantidade[]"]').value);
+    var valorUnit = parseFloat(tr.querySelector('[name="valor_unit[]"]').value);
+    var total = quantidade * valorUnit;
+    tr.querySelector('[name="total[]"]').value = total.toFixed(2);
+
+    atualizarTotalPedido();
+}
+
+function atualizarTotalPedido() {
+    var totalPedido = 0;
+    var totais = document.getElementsByName("total[]");
+    for (var i = 0; i < totais.length; i++) {
+        totalPedido += parseFloat(totais[i].value);
+    }
+    document.getElementById("total_pedido").value = totalPedido.toFixed(2);
+}
+
+function adicionarItem() {
+    var tabela = document.getElementById("tabela-itens");
+    var numRows = tabela.rows.length - 1;
+    var novaLinha = tabela.insertRow(-1);
+    var numCell = novaLinha.insertCell(0);
+    var inputNum = document.createElement('input');
+    inputNum.type = 'text';
+    inputNum.name = 'num[]';
+    inputNum.value = numRows + 1;
+    inputNum.readonly = true;
+    numCell.appendChild(inputNum);
+
+    var campos = ['produto[]', 'quantidade[]', 'valor_unit[]', 'total[]'];
+
+    for (var i = 0; i < campos.length; i++) {
+        var cell = novaLinha.insertCell(i+1);
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.name = campos[i];
+        input.value = '';
+        input.onchange = function() { calcularTotal(this); };
+        cell.appendChild(input);
+    }
+
+    atualizarTotalPedido();
+}
+
+function excluirItem() {
+    var tabela = document.getElementById("tabela-itens");
+    var numRows = tabela.rows.length;
+    if (numRows > 2) { // Verifica se há mais de uma linha de item além da linha de cabeçalho
+        tabela.deleteRow(-1);
+        atualizarTotalPedido();
+    }
+}
+
+window.onload = function() {
+    atualizarDataHora();
+};
+</script>
+
+</body>
+</html>
