@@ -150,6 +150,7 @@ function calcularTotal(input) {
     var valorUnit = parseFloat(tr.querySelector('[name="valor_unit[]"]').value);
     var total = quantidade * valorUnit;
     tr.querySelector('[name="total[]"]').value = total.toFixed(2);
+
     atualizarTotalPedido();
 }
 
@@ -188,17 +189,16 @@ function adicionarItem() {
 
     atualizarTotalPedido();
 }
-    
+
 function excluirItem() {
     var tabela = document.getElementById("tabela-itens");
     var numRows = tabela.rows.length;
     if (numRows > 2) { // Verifica se há mais de uma linha de item além da linha de cabeçalho
         tabela.deleteRow(-1);
-        
         atualizarTotalPedido();
     }
 }
-    
+
 window.onload = function() {
     atualizarDataHora();
 };
@@ -206,4 +206,3 @@ window.onload = function() {
 
 </body>
 </html>
-
