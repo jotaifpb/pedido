@@ -197,14 +197,16 @@ function excluirItem() {
         tabela.deleteRow(-1);
         atualizarTotalPedido();
     }
-    document.getElementById("total_pedido").value = "0.00";
-    atualizarDataHora();
 }
-    function novoPedido() {
+
+function novoPedido() {
     var tabela = document.getElementById("tabela-itens");
     while (tabela.rows.length > 1) {
         tabela.deleteRow(-1);
     }
+    document.getElementById("total_pedido").value = "0.00";
+    atualizarDataHora();
+}
 
 window.onload = function() {
     atualizarDataHora();
