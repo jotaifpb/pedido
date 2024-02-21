@@ -150,7 +150,6 @@ function calcularTotal(input) {
     var valorUnit = parseFloat(tr.querySelector('[name="valor_unit[]"]').value);
     var total = quantidade * valorUnit;
     tr.querySelector('[name="total[]"]').value = total.toFixed(2);
-
     atualizarTotalPedido();
 }
 
