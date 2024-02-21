@@ -45,7 +45,7 @@
         background-color: #f2f2f2; /* Destaca o campo quando o mouse passa sobre ele */
     }
   
-    #btn-adicionar, #btn-excluir {
+    #btn-adicionar, #btn-excluir, #btn-novo {
         display:left;
         width: 150px;
         margin: 10px auto;
@@ -76,7 +76,7 @@
   #btn-imprimir:hover {
         background-color: #FF3300;
   }
-    #btn-adicionar:hover, #btn-excluir:hover
+    #btn-adicionar:hover, #btn-excluir:hover, #btn-novo:hover
   {
         background-color: #45a049;
   }
@@ -88,7 +88,7 @@
         input[type="text"] {
             width: calc(100% - 20px); /* Ajuste a largura dos campos de texto para a impressora EPSON T20 */
         }
-        #btn-adicionar, #btn-excluir, #btn-imprimir {
+        #btn-adicionar, #btn-excluir, #btn-imprimir, #btn-novo {
             display: none;
         }
     }
@@ -123,6 +123,7 @@
     <button id="btn-adicionar" onclick="adicionarItem()">Adicionar Item</button>
     <button id="btn-excluir" onclick="excluirItem()">Excluir Último Item</button>
     <button id="btn-imprimir" onclick="window.print()">Imprimir Pedido</button>
+    <button id="btn-novo" onclick="novoPedido()">Novo Pedido</button>
 </div>
   
   
@@ -197,7 +198,12 @@ function excluirItem() {
         atualizarTotalPedido();
     }
 }
-
+    
+function novoPedido() {
+    var tabela = document.getElementById("tabela-itens");
+    while (tabela.rows.length > 1) {
+        tabela.deleteRow(-1);
+    }
 window.onload = function() {
     atualizarDataHora();
 };
