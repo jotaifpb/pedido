@@ -83,10 +83,10 @@
         cursor: pointer;
     }
   
-
   #btn-novo:hover {
         background-color: #66CDAA;
   }
+
     #btn-adicionar:hover, #btn-excluir:hover
   {
         background-color: #45a049;
