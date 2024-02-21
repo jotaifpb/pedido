@@ -4,6 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gerador de Pedido</title>
+<style>
+    @page {
+        size: 80mm 297mm; /* Ajuste o tamanho da página para a impressora EPSON T20 */
+        margin: 5mm;
+    }
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        font-size: 13px;
+        font-weight: bolder;
+      /* Tamanho da fonte definido como 8 */
+    }
+    #pedido {
+        width: 100%;
+        padding: 5px;
+    }
+    table {
+        width: 70%; 
+        border:"1";
+        border-collapse: collapse;
+       
+    }
+    th, td, {
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    input[type="text"] {
+        width: calc(100% - 10px);
+        font-size: 13px; 
+        font-weight: bold;
+        border: 1px solid #ccc;
+    }
+  
+    input[type="text"]:hover {
+        background-color: #f2f2f2; /* Destaca o campo quando o mouse passa sobre ele */
+    }
+  
+    #btn-adicionar, #btn-excluir {
+        display:left;
+        width: 150px;
+        margin: 10px auto;
+        padding: 8px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+  
+  #btn-imprimir {
+        display: left;
+        width: 150px;
+        margin: 10px auto;
+        padding: 8px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+  
+  #btn-imprimir:hover {
+        background-color: #FF3300;
+  }
+    #btn-adicionar:hover, #btn-excluir:hover
+  {
+        background-color: #45a049;
+  }
+  
+    @media print {
+        #pedido {
+            width: 80mm; /* Ajuste a largura do pedido para a impressora EPSON T20 */
+        }
+        input[type="text"] {
+            width: calc(100% - 20px); /* Ajuste a largura dos campos de texto para a impressora EPSON T20 */
+        }
+        #btn-adicionar, #btn-excluir, #btn-imprimir {
+            display: none;
+        }
+    }
+</style>
 </head>
 <body>
 
@@ -15,18 +104,18 @@
             <tr>
                 <th>NUM</th>
                 <th>PRODUTO</th>
-                <th>QUANTIDADE</th>
-                <th>VALOR UNIT</th>
+                <th>QUANT.</th>
+                <th>VALOR UNIT.</th>
                 <th>TOTAL</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>1</td>
-                <td><input type="text" cols="20" name="produto[]" value="" maxlength="40"></td>
-                <td><input type="text" name="quantidade[]" value=""  maxlength="5" onchange="calcularTotal(this)"></td>
-                <td><input type="text" name="valor_unit[]" value="" maxlength="5" onchange="calcularTotal(this)"></td>
-                <td><input type="text" name="total[]" value="" readonly maxlength="10"></td>
+                <td><input style="width:170px;font-size: 13px; font-weight: bold" type="text" cols="20" name="produto[]" value="" maxlength="40"></td>
+                <td><input style="width:22px;font-size: 13px; font-weight: bold" type="text" name="quantidade[]" value=""  maxlength="5" onchange="calcularTotal(this)"></td>
+                <td><input style="width:35px;font-size: 13px; font-weight: bold" type="text" name="valor_unit[]" value="" maxlength="5" onchange="calcularTotal(this)"></td>
+                <td><input style="width:50px;font-size: 13px; font-weight: bold" type="text" name="total[]" value="" readonly maxlength="10"></td>
             </tr>
         </tbody>
         
@@ -35,12 +124,17 @@
     <button id="btn-excluir" onclick="excluirItem()">Excluir Último Item</button>
     <button id="btn-imprimir" onclick="window.print()">Imprimir Pedido</button>
 </div>
+  
+  
   <tfoot>
             <tr>
-                <td colspan="4" style="text-align:right;">VL. TOTAL:</td>
-                <td><input type="text" id="total_pedido" value="0.00" readonly class="destaque" maxlength="10"></td>
+                <td>
+                  <input type="text" style="text-align:center; font-size: 30px; font-weight: bold; background-color: #4CAF50; border: double" id="total_pedido" value="0.00" readonly class="destaque" maxlength="10"></td>
             </tr>
         </tfoot>
+    <p style="text-align:center; font-size: 22px; font-weight: bold" >
+  VALOR TOTAL<br />
+</p>
 
 <script>
 function atualizarDataHora() {
@@ -111,3 +205,4 @@ window.onload = function() {
 
 </body>
 </html>
+
