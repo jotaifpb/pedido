@@ -69,6 +69,21 @@
   #btn-imprimir:hover {
         background-color: #FF3300;
   }
+ #btn-novo {
+        display: left;
+        width: 150px;
+        margin: 10px auto;
+        padding: 8px;
+        background-color:  #90EE90;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+  
+
   #btn-novo:hover {
         background-color: #90EE90;
   }
