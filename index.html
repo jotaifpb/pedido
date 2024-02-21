@@ -188,21 +188,22 @@ function adicionarItem() {
 
     atualizarTotalPedido();
 }
-
-function excluirItem() {
-    var tabela = document.getElementById("tabela-itens");
-    var numRows = tabela.rows.length;
-    if (numRows > 2) { // Verifica se há mais de uma linha de item além da linha de cabeçalho
-        tabela.deleteRow(-1);
-        atualizarTotalPedido();
-    }
-}
     
 function novoPedido() {
     var tabela = document.getElementById("tabela-itens");
     while (tabela.rows.length > 1) {
         tabela.deleteRow(-1);
     }
+function excluirItem() {
+    var tabela = document.getElementById("tabela-itens");
+    var numRows = tabela.rows.length;
+    if (numRows > 2) { // Verifica se há mais de uma linha de item além da linha de cabeçalho
+        tabela.deleteRow(-1);
+        
+        atualizarTotalPedido();
+    }
+}
+    
 window.onload = function() {
     atualizarDataHora();
 };
