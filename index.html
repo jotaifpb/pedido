@@ -21,19 +21,27 @@
         width: 100%;
         padding: 5px;
     }
-    table {
-        width: 80%; 
-        border:"1";
-        border-collapse: collapse;
-       
-    }
-    th, td, {
-        border: 1px solid #ccc;
-        text-align: left;
-    }
-    th {
-        background-color: #f2f2f2;
-    }
+   td, th {
+  padding: .7em;
+  margin: 0;
+  /*border: 1px solid #ccc;*/
+  text-align: center;
+}
+
+th{
+  /*background-color: #EEE;*/
+}
+td{
+  font-weight:bold;
+  /*background-color: #EEE;*/
+}
+
+table{
+  width: 100%;
+  margin-bottom : .5em;
+  table-layout: fixed;
+  text-align: center;
+}
     input[type="text"] {
         width: calc(100% - 10px);
         font-size: 13px; 
