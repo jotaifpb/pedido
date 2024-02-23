@@ -160,6 +160,11 @@ function atualizarDataHora() {
     var dataHoraFormatada = dataHoraAtual.toLocaleString();
     document.getElementById("data-hora").textContent = dataHoraFormatada;
 }
+    
+    function converterParaMaiusculas() {
+    var input = document.getElementById("texto");
+    input.value = input.value.toUpperCase();
+}
 
 function calcularTotal(input) {
     var tr = input.parentNode.parentNode;
